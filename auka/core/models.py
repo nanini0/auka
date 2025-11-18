@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
-
+from django.utils import timezone
+from decimal import Decimal
 # Create your models here.
  
 class Categoria(models.Model):
@@ -13,19 +14,40 @@ class Categoria(models.Model):
     
 
 class Producto(models.Model):
-    nombre_prod=models.CharField(max_length=60,
-                                 verbose_name='producto')
-    precio_prod=models.DecimalField(max_digits=10,decimal_places=2,validators=[MinValueValidator(0.00)])
-    descripcion_prod=models.TextField(verbose_name='descipcion')
-    img_prod=models.ImageField(upload_to='producto/')
-    beneficio_prod=models.CharField(max_length=200)
-    categorias=models.ManyToManyField(Categoria,related_name="productos",
-        blank=True)
+    nombre_prod = models.CharField(max_length=60, verbose_name='producto')
+    precio_prod = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.00)])
+    descripcion_prod = models.TextField(verbose_name='descipcion')
+    img_prod = models.ImageField(upload_to='producto/')
+    beneficio_prod = models.CharField(max_length=200)
+    # Nota: related_name='productos' en Categoria es redundante si ya lo defines aquí, 
+    # pero como es M2M está bien.
+    categorias = models.ManyToManyField(Categoria, related_name="productos", blank=True)
     stock = models.BooleanField(default=True)
+
     def __str__(self):
         return f"{self.nombre_prod} (${self.precio_prod}) {self.stock}"
     
+    @property
+    def precio_actual(self):
+        ahora = timezone.now()
+        
+        
+        oferta_activa = self.ofertas.filter(
+            activa=True,
+            fecha_inicio__lte=ahora,
+            fecha_fin__gte=ahora
+        ).order_by('-porcentaje_descuento').first()
+        
+       
+        if oferta_activa:
+            descuento = (self.precio_prod * oferta_activa.porcentaje_descuento) / Decimal(100)
+            return round(self.precio_prod - descuento, 2)
+            
+        return self.precio_prod      
 
+    @property
+    def tiene_descuento(self):
+        return self.precio_actual < self.precio_prod
 class Servicios(models.Model):
     nombre_serv=models.CharField(max_length=50,
                                  verbose_name='nombre')
