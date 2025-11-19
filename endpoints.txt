@@ -9,3 +9,5 @@ DELETE	/api/v1/productos/1/
 
 muestra las categorias con sus productos
 /api/v1/categorias/
+muestra los destacados
+/api/v1/destacado/

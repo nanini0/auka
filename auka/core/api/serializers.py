@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from ..models import Producto, Categoria, Oferta
-
+from ..models import Producto, Categoria, Oferta,ProductoDestacado
+from django.core.validators import MinValueValidator
 class CategoriaSerializer(serializers.ModelSerializer):
    class Meta:
         model = Categoria
@@ -34,3 +34,21 @@ class CategoriaConProductosSerializer(serializers.ModelSerializer):
         model = Categoria
         fields = ['id', 'nombre_cat', 'productos']
     
+class OfertasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Oferta
+        fields=['nombre','productos','']
+        
+        
+class ProductoDestacadoSerializer(serializers.Serializer):
+    
+    producto = ProductoSerializer(read_only=True)
+    class Meta:
+        model = ProductoDestacado
+        fields = [
+            'id', 
+            'orden', 
+            'activo',
+            'producto'
+        ]
+        

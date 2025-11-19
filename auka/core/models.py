@@ -112,3 +112,4 @@ class Blog(models.Model):
         return f"{self.titulo} {self.activa}"
     class Meta:
         ordering = ['-fecha_publicacion']
+        

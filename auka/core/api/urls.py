@@ -2,7 +2,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 # OJO con la importación: como estás dentro de 'core', importamos desde .views
-from .views import ProductoViewSet,CategoriaViewSet
+from .views import ProductoViewSet,CategoriaViewSet,ProductoDestacadoViewset
 #CategoriaViewSet 
 
 # 1. Creamos el Router
@@ -12,6 +12,7 @@ router = DefaultRouter()
 # Esto crea: /productos/ y /categorias/
 router.register(r'productos', ProductoViewSet, basename='producto')
 router.register(r'categorias', CategoriaViewSet, basename='categoria')
+router.register(r'destacado', ProductoDestacadoViewset, basename='destacado')
 
 
 #router.register(r'categorias', CategoriaViewSet, basename='categoria')

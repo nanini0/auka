@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from core.models import Producto,Categoria
-from .serializers import ProductoSerializer,CategoriaSerializer,CategoriaConProductosSerializer
+from core.models import Producto,Categoria,ProductoDestacado
+from .serializers import ProductoSerializer,CategoriaConProductosSerializer,ProductoDestacadoSerializer
     
 class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
     
@@ -28,3 +28,8 @@ class CategoriaViewSet(viewsets.ReadOnlyModelViewSet):
     
     # 2. Usamos el nuevo serializer que incluye la lista anidada
         serializer_class = CategoriaConProductosSerializer
+
+class ProductoDestacadoViewset(viewsets.ReadOnlyModelViewSet):
+    
+    queryset = ProductoDestacado.objects.select_related('producto').filter(activo=True).order_by('orden', '-fecha_creacion')
+    serializer_class = ProductoDestacadoSerializer
