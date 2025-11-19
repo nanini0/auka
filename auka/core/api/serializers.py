@@ -21,5 +21,16 @@ class ProductoSerializer(serializers.ModelSerializer):
             'tiene_descuento', 
             'img_prod', 
             'stock',
-            'categorias'
+            'categorias',
+            'beneficio_prod'
         ]
+        
+class CategoriaConProductosSerializer(serializers.ModelSerializer):
+    # 'productos' es el related_name que definiste en tu modelo Producto:
+    # categorias = models.ManyToManyField(..., related_name="productos")
+    productos = ProductoSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Categoria
+        fields = ['id', 'nombre_cat', 'productos']
+    

@@ -1,0 +1,11 @@
+Método HTTP	URL (Endpoint)	
+GET	/api/v1/productos/	Listar: Te da todos los productos con stock (stock=True).
+GET	/api/v1/productos/?categoria=hierbas	FILTRAR (Tu código): Busca productos cuya categoría contenga la palabra "ropa".
+POST	/api/v1/productos/	Crear: Envías un JSON para crear un producto nuevo.
+GET	/api/v1/productos/1/	Detalle: Ver solo el producto con ID 1.
+PUT	/api/v1/productos/1/	Editar: Reemplaza toda la información del producto 1.
+PATCH	/api/v1/productos/1/	Parchear: Cambia solo un dato (ej: solo el precio) del producto 1.
+DELETE	/api/v1/productos/1/
+
+muestra las categorias con sus productos
+/api/v1/categorias/
