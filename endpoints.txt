@@ -11,3 +11,10 @@ muestra las categorias con sus productos
 /api/v1/categorias/
 muestra los destacados
 /api/v1/destacado/
+
+
+{
+    "productos": "http://127.0.0.1:8000/api/v1/productos/",
+    "categorias": "http://127.0.0.1:8000/api/v1/categorias/",
+    "destacado": "http://127.0.0.1:8000/api/v1/destacado/"
+}

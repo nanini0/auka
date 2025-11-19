@@ -15,7 +15,7 @@ class Categoria(models.Model):
 
 class Producto(models.Model):
     nombre_prod = models.CharField(max_length=60, verbose_name='producto')
-    precio_prod = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.00)])
+    precio_prod = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
     descripcion_prod = models.TextField(verbose_name='descipcion')
     img_prod = models.ImageField(upload_to='producto/')
     beneficio_prod = models.CharField(max_length=200)
